@@ -15,14 +15,14 @@ pub struct SharedOutput<R: gfx::Resources, W: OpenGLWindow> {
     pub window: Rc<RefCell<W>>,
     frame: gfx::handle::FrameBuffer<R>,
     mask: gfx::Mask,
-    supports_gamma_convertion: bool,
+    supports_gamma_conversion: bool,
     gamma: gfx::Gamma,
 }
 
 impl<R: gfx::Resources, W: OpenGLWindow> SharedOutput<R, W> {
     /// Try to set the gamma conversion.
     pub fn set_gamma(&mut self, gamma: gfx::Gamma) -> Result<(), ()> {
-        if self.supports_gamma_convertion || gamma == gfx::Gamma::Original {
+        if self.supports_gamma_conversion || gamma == gfx::Gamma::Original {
             self.gamma = gamma;
             Ok(())
         } else {
@@ -67,7 +67,7 @@ pub fn init_shared<W: OpenGLWindow>(window: Rc<RefCell<W>>) -> SharedSuccess<W> 
         window: window.clone(),
         frame: factory.get_main_frame_buffer(),
         mask: gfx::COLOR | gfx::DEPTH | gfx::STENCIL,
-        supports_gamma_convertion: true,
+        supports_gamma_conversion: true,
         gamma: gfx::Gamma::Original,
     };
     let stream = factory.create_stream(out);

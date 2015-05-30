@@ -12,14 +12,14 @@ pub struct SyncOutput<R: gfx::Resources, W: OpenGLWindow> {
     pub window: Arc<RwLock<W>>,
     frame: gfx::handle::FrameBuffer<R>,
     mask: gfx::Mask,
-    supports_gamma_convertion: bool,
+    supports_gamma_conversion: bool,
     gamma: gfx::Gamma,
 }
 
 impl<R: gfx::Resources, W: OpenGLWindow> SyncOutput<R, W> {
     /// Try to set the gamma conversion.
     pub fn set_gamma(&mut self, gamma: gfx::Gamma) -> Result<(), ()> {
-        if self.supports_gamma_convertion || gamma == gfx::Gamma::Original {
+        if self.supports_gamma_conversion || gamma == gfx::Gamma::Original {
             self.gamma = gamma;
             Ok(())
         } else {
@@ -64,7 +64,7 @@ pub fn init_sync<W: OpenGLWindow>(window: Arc<RwLock<W>>) -> SyncSuccess<W> {
         window: window.clone(),
         frame: factory.get_main_frame_buffer(),
         mask: gfx::COLOR | gfx::DEPTH | gfx::STENCIL,
-        supports_gamma_convertion: true,
+        supports_gamma_conversion: true,
         gamma: gfx::Gamma::Original,
     };
     let stream = factory.create_stream(out);
