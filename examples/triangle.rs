@@ -25,9 +25,10 @@ gfx_vertex!( Vertex {
 
 
 fn main() {
-    const GLVERSION: OpenGL = OpenGL::_2_1;
-    let settings = WindowSettings::new("shared glutin window", (640, 480));
-    let window = Arc::new(RwLock::new(GlutinWindow::new(GLVERSION, settings)));
+    const GLVERSION: OpenGL = OpenGL::V2_1;
+    let settings = WindowSettings::new("shared glutin window", (640, 480))
+        .opengl(GLVERSION);
+    let window = Arc::new(RwLock::new(GlutinWindow::new(settings).unwrap()));
     let (mut stream, mut device, mut factory) = init_sync(window.clone());
 
     let batch = {
